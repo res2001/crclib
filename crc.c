@@ -75,6 +75,7 @@ unsigned char eval_crc8(unsigned char crc, const unsigned char *msg, unsigned ms
 }
 /*-----------------------------------------------------------------------------------------------*/
 
+#ifdef REV_CRC
 /*-----------------------------------------------------------------------------------------------*/
 unsigned char eval_revcrc8(unsigned char crc, const unsigned char *msg, unsigned msg_len)
 {
@@ -107,6 +108,7 @@ unsigned char eval_revcrc8(unsigned char crc, const unsigned char *msg, unsigned
 	return crc & 0xff;
 }
 /*-----------------------------------------------------------------------------------------------*/
+#endif
 
 #endif						/*#if defined(LES_CRC)*/
 /*===============================================================================================*/
