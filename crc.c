@@ -159,20 +159,22 @@ unsigned char eval_crc8(unsigned char crc, const unsigned char *msg, unsigned ms
 
 /*-----------------------------------------------------------------------------------------------*/
 #if CRCMODBUS_EN > 0
-unsigned short eval_modbuscrc(const unsigned char *msg, unsigned msg_len)
+unsigned short eval_modbuscrc(unsigned short init_crc, const unsigned char *msg, unsigned msg_len)
 {
 	/*
 	 * Расчет контрольной суммы для протокола ModBus.
 	 * ОПИСАНИЕ
 	 *   Вычисляется 16-битный циклический избыточный код.
 	 * ПАРАМЕТРЫ
-	 *   msg     - указатель на массив данных, по которым вычисляется контрольная сумма;
-	 *   msg_len - длина обрабатываемого массива.
+	 *   init_crc - начальное значение контрольной суммы (при первом вызове должно быть равно
+	 *              0xFFFF);
+	 *   msg      - указатель на массив данных, по которым вычисляется контрольная сумма;
+	 *   msg_len  - длина обрабатываемого массива.
 	 * ВОЗВРАЩАЕМОЕ ЗНАЧЕНИЕ
 	 *   Полученное значение контрольной суммы.
 	 */
 
-    unsigned short       crc = 0xFFFFU;
+    unsigned short       crc = init_crc;
     unsigned char        j;
     const unsigned short modbuscrc_poly = 0xA001U;
 
