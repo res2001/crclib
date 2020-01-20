@@ -26,7 +26,7 @@ uint8_t crc4_ref_up4(uint8_t crc, uint8_t nyb)
 
 int main(void)
     {
-    /* Размер должен быть кратным 4 */
+    /* Р Р°Р·РјРµСЂ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РєСЂР°С‚РЅС‹Рј 4 */
     const size_t DATA_LEN = 4 * 65536;
     size_t i;
     uint8_t* data;
@@ -48,13 +48,13 @@ int main(void)
     srand((unsigned int)time(NULL));
 #endif
 
-    /* Заполнить массив случайными значениями */
+    /* Р—Р°РїРѕР»РЅРёС‚СЊ РјР°СЃСЃРёРІ СЃР»СѓС‡Р°Р№РЅС‹РјРё Р·РЅР°С‡РµРЅРёСЏРјРё */
     for (i = 0; i < DATA_LEN; i++)
         {
         data[i] = (uint8_t)(rand() & 0xFF);
         }
 
-    /* Тест CRC4 */
+    /* РўРµСЃС‚ CRC4 */
     puts("---- CRC4 ITU ----");
 
     crc4_ref = crc4_4 = crc4_8 = CRC4_START_VAL;
@@ -72,11 +72,11 @@ int main(void)
     crc4_8 = CRC4_Block8(CRC4_START_VAL, data, DATA_LEN);
     printf("CRC4_Block8     : 0x%X (%s)\n", crc4_8, OK_STR(crc4_8 == crc4_ref));
 
-    /* CRC4 блока данных с добавленной CRC должно быть равно 0 */
+    /* CRC4 Р±Р»РѕРєР° РґР°РЅРЅС‹С… СЃ РґРѕР±Р°РІР»РµРЅРЅРѕР№ CRC РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СЂР°РІРЅРѕ 0 */
     crc4_8 = CRC4_Add4(crc4_8, crc4_8);
     printf("CRC4    of { data, crc } = 0x%X (%s)\n", crc4_8, OK_STR(0 == crc4_8));
 
-    /* Тест CRC8 */
+    /* РўРµСЃС‚ CRC8 */
     puts("---- Buggy CRC8 ----");
 
     crc8_ref = eval_crc8(CRC8_START_VAL, data, DATA_LEN);
@@ -91,11 +91,11 @@ int main(void)
     crc8 = CRC8_Block8(CRC8_START_VAL, data, DATA_LEN);
     printf("CRC8_Block8     : 0x%02X (%s)\n", crc8, OK_STR(crc8 == crc8_ref));
 
-    /* CRC8 блока данных с добавленной CRC должно быть равно 0 */
+    /* CRC8 Р±Р»РѕРєР° РґР°РЅРЅС‹С… СЃ РґРѕР±Р°РІР»РµРЅРЅРѕР№ CRC РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СЂР°РІРЅРѕ 0 */
     crc8 = CRC8_Add8(crc8, crc8);
     printf("CRC8    of { data, crc } = 0x%02X (%s)\n", crc8, OK_STR(0 == crc8));
 
-    /* Тест CRC8DS */
+    /* РўРµСЃС‚ CRC8DS */
     puts("---- CRC8 DALLAS ----");
 
     crc8_ref = eval_revcrc8(CRC8DS_START_VAL, data, DATA_LEN);
@@ -110,11 +110,11 @@ int main(void)
     crc8 = CRC8DS_Block8(CRC8DS_START_VAL, data, DATA_LEN);
     printf("CRC8DS_Block8   : 0x%02X (%s)\n", crc8, OK_STR(crc8 == crc8_ref));
 
-    /* CRC8 блока данных с добавленной CRC должно быть равно 0 */
+    /* CRC8 Р±Р»РѕРєР° РґР°РЅРЅС‹С… СЃ РґРѕР±Р°РІР»РµРЅРЅРѕР№ CRC РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СЂР°РІРЅРѕ 0 */
     crc8 = CRC8DS_Add8(crc8, crc8);
     printf("CRC8DS  of { data, crc } = 0x%02X (%s)\n", crc8, OK_STR(0 == crc8));
 
-    /* Тест CRC16-CCITT */
+    /* РўРµСЃС‚ CRC16-CCITT */
     puts("---- CRC16 CCITT ----");
 
     crc16_ref = eval_crc16(CRC16_START_VAL, data, DATA_LEN);
@@ -138,11 +138,11 @@ int main(void)
     crc16 = CRC16_Block16(CRC16_START_VAL, data16, DATA_LEN / 2);
     printf("CRC16_Block16   : 0x%04X (%s)\n", crc16, OK_STR(crc16 == crc16_ref));
 
-    /* CRC16 блока данных с добавленной CRC16 старшим байтом вперед должно быть равно 0 */
+    /* CRC16 Р±Р»РѕРєР° РґР°РЅРЅС‹С… СЃ РґРѕР±Р°РІР»РµРЅРЅРѕР№ CRC16 СЃС‚Р°СЂС€РёРј Р±Р°Р№С‚РѕРј РІРїРµСЂРµРґ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СЂР°РІРЅРѕ 0 */
     crc16 = CRC16_Add8(CRC16_Add8(crc16, (uint8_t)(crc16 >> 8)), (uint8_t)(crc16 & 0xFF));
     printf("CRC16   of { data, crchi, crclo } = 0x%04X (%s)\n", crc16, OK_STR(0 == crc16));
 
-    /* Тест CRC16-MODBUS */
+    /* РўРµСЃС‚ CRC16-MODBUS */
     puts("---- CRC16 MODBUS ----");
 
     crc16_ref = eval_modbuscrc(CRC16MB_START_VAL, data, DATA_LEN);
@@ -166,16 +166,16 @@ int main(void)
     crc16 = CRC16MB_Block16(CRC16MB_START_VAL, data16, DATA_LEN / 2);
     printf("CRC16MB_Block16 : 0x%04X (%s)\n", crc16, OK_STR(crc16 == crc16_ref));
 
-    /* CRC16 блока данных с добавленной CRC16 младшим байтом вперед должно быть равно 0 */
+    /* CRC16 Р±Р»РѕРєР° РґР°РЅРЅС‹С… СЃ РґРѕР±Р°РІР»РµРЅРЅРѕР№ CRC16 РјР»Р°РґС€РёРј Р±Р°Р№С‚РѕРј РІРїРµСЂРµРґ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СЂР°РІРЅРѕ 0 */
     crc16 = CRC16MB_Add8(CRC16MB_Add8(crc16, (uint8_t)(crc16 & 0xFF)), (uint8_t)(crc16 >> 8));
     printf("CRC16MB of { data, crclo, crchi } = 0x%04X (%s)\n", crc16, OK_STR(0 == crc16));
 
-    /* Тест CRC32-CCITT */
+    /* РўРµСЃС‚ CRC32-CCITT */
     puts("---- CRC32 CCITT ----");
 
     crc32 = CRC32_Block8(CRC32_START_VAL, data, DATA_LEN);
     printf("CRC32_Block8    : 0x%08X\n", crc32);
-    /* CRC32 блока данных с добавленной ~CRC32 младшим байтом вперед должно быть равно -1 */
+    /* CRC32 Р±Р»РѕРєР° РґР°РЅРЅС‹С… СЃ РґРѕР±Р°РІР»РµРЅРЅРѕР№ ~CRC32 РјР»Р°РґС€РёРј Р±Р°Р№С‚РѕРј РІРїРµСЂРµРґ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СЂР°РІРЅРѕ -1 */
     not_crc32 = ~crc32;
     crc32 = CRC32_Block8(crc32, (uint8_t*)&not_crc32, sizeof(not_crc32));
     printf("CRC32 of { data, ~crc32 } = 0x%08X (%s)\n", crc32, OK_STR(0 == ~crc32));
